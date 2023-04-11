@@ -12,18 +12,6 @@ function ProductSearch() {
   const [searchText, setSearchText] = useState('');
   const [products, setProducts] = useState([]);
 
-  const handleCategoryChange = (event) => {
-    setCategory(event.target.value);
-  };
-
-  const handleSiteChange = (event) => {
-    setSite(event.target.value);
-  };
-
-  const handleSearchTextChange = (event) => {
-    setSearchText(event.target.value);
-  };
-
   const handleSearch = async () => {
     let products = [];
     if (site === 'Mercado Livre') {
@@ -34,14 +22,19 @@ function ProductSearch() {
 
   return (
     <div>
-      <CategorySelect value={category} onChange={handleCategoryChange} />
-      <br />
-      <SiteSelect value={site} onChange={handleSiteChange} />
-      <br />
-      <SearchInput value={searchText} onChange={handleSearchTextChange} />
-      <br />
+      <CategorySelect
+        value={category}
+        onChange={(event) => setCategory(event.target.value)}
+      />
+      <SiteSelect
+        value={site}
+        onChange={(event) => setSite(event.target.value)}
+      />
+      <SearchInput
+        value={searchText}
+        onChange={(event) => setSearchText(event.target.value)}
+      />
       <button onClick={handleSearch}>Search</button>
-      <br />
       <br />
       <ProductList products={products} />
     </div>
