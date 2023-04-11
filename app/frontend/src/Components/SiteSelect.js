@@ -3,9 +3,9 @@ function SiteSelect({ value, onChange }) {
     <label>
       Site:
       <select value={value} onChange={onChange}>
-        <option value="All">Todas</option>
+        <option value="Todas">Todas</option>
         <option value="Mercado Livre">Mercado Livre</option>
-        <option value="Buscapé">Buscapé</option>
+        <option value="Buscape">Buscapé</option>
       </select>
     </label>
   );

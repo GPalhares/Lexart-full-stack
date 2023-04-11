@@ -7,7 +7,7 @@ import SiteSelect from './Components/SiteSelect';
 import searchByCategoryAndText from './utils/MercadoLivreApi/fetchProducts';
 
 function ProductSearch() {
-  const [category, setCategory] = useState('Mobile');
+  const [category, setCategory] = useState('Celular');
   const [site, setSite] = useState('Mercado Livre');
   const [searchText, setSearchText] = useState('');
   const [products, setProducts] = useState([]);
@@ -25,9 +25,11 @@ function ProductSearch() {
   };
 
   const handleSearch = async () => {
-    const products = await searchByCategoryAndText('MLB1000', 'smartphone');
+    let products = [];
+    if (site === 'Mercado Livre') {
+      products = await searchByCategoryAndText(category, searchText);
+    }
     setProducts(products);
-    console.error(products);
   };
 
   return (
