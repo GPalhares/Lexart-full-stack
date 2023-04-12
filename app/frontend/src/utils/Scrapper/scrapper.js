@@ -10,16 +10,26 @@ async function webScrap(category, search = '') {
     const items = [];
     const elements = document.querySelectorAll('.Hits_Wrapper__3q_7P > div');
 
-    for (let el of elements) {
+    for (let i = 0; i < elements.length; i++) {
+      const el = elements[i];
       const item = {};
       const imageElement = el.querySelector('span');
+      const linkElement = el.querySelector(
+        '.SearchCard_ProductCard_Inner__7JhKb'
+      );
 
       if (imageElement) {
-        item.name = el.querySelector('img').getAttribute('alt');
-        item.image = el.querySelector('img').getAttribute('src');
+        item.title = el.querySelector('img').getAttribute('alt');
+        let thumbNail = el.querySelector('img').getAttribute('src');
+        item.thumbnail = thumbNail;
         item.price = el
           .querySelector('[data-testid="product-card::price"]')
           .textContent.trim();
+        items.push(item);
+      }
+
+      if (linkElement) {
+        item.permalink = linkElement.getAttribute('href');
         items.push(item);
       }
     }
@@ -28,7 +38,7 @@ async function webScrap(category, search = '') {
   });
 
   await browser.close();
-
+  console.log(items);
   return items;
 }
 

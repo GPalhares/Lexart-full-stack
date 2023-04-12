@@ -5,6 +5,7 @@ import ProductList from './Components/ProductList';
 import SearchInput from './Components/SearchInput';
 import SiteSelect from './Components/SiteSelect';
 import searchByCategoryAndText from './utils/MercadoLivreApi/fetchProducts';
+import webScrap from './utils/Scrapper/scrapper';
 
 function ProductSearch() {
   const [category, setCategory] = useState('Celular');
@@ -16,6 +17,9 @@ function ProductSearch() {
     let products = [];
     if (site === 'Mercado Livre') {
       products = await searchByCategoryAndText(category, searchText);
+    }
+    if (site === 'Buscapé') {
+      products = await webScrap(category, searchText);
     }
     setProducts(products);
   };
