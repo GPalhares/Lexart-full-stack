@@ -2,10 +2,15 @@ function ProductList({ products }) {
   return (
     <ul>
       {products.map((product) => (
-        <li key={product.id}>
-          <img src={product.thumbnail} alt={product.id} />
+        <li key={product.title}>
           <p>{product.title}</p>
-          <p>R${product.price.toFixed(2)}</p>
+          <img
+            src={product.thumbnail}
+            alt={product.title}
+            width="100"
+            height="100"
+          />
+          <p>{product.price}</p>
           <p>
             <a href={product.permalink}>Link</a>
           </p>

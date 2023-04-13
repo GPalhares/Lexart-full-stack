@@ -5,6 +5,8 @@ import ProductList from './Components/ProductList';
 import SearchInput from './Components/SearchInput';
 import SiteSelect from './Components/SiteSelect';
 import searchByCategoryAndText from './utils/MercadoLivreApi/fetchProducts';
+import formatImages from './utils/functions/formatImages';
+import formatPrices from './utils/functions/formatPrices';
 
 function ProductSearch() {
   const [category, setCategory] = useState('Celular');
@@ -15,21 +17,18 @@ function ProductSearch() {
   const handleSearch = async () => {
     let products = [];
     if (site === 'Mercado Livre') {
-      products = await searchByCategoryAndText(category, searchText);
+      const data = await searchByCategoryAndText(category, searchText);
+      products = formatPrices(data);
+      // products = data;
     }
     if (site === 'Buscape') {
-      try {
-        const response = await fetch(
-          `http://localhost:3030/search/${category}/${searchText}`
-        );
+      console.log('1');
 
-        const data = await response.json();
-        console.log(data.results);
-        return data.results;
-      } catch (error) {
-        console.error('Error fetching products:', error);
-        return [];
-      }
+      const response = await fetch(
+        `http://localhost:3030/search/${category}/${searchText}`
+      );
+      const data = await response.json();
+      products = formatImages(category, data);
     }
     setProducts(products);
   };
