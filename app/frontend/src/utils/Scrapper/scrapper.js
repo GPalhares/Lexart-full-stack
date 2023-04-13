@@ -2,9 +2,10 @@ const puppeteer = require('puppeteer');
 
 async function webScrap(category, search = '') {
   const itens = {};
-  const browser = await puppeteer.launch({ headless: false });
+  const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
   await page.goto(`https://www.buscape.com.br/search?q=${category + search}`);
+
   itens.price = await page.$$eval('.Text_MobileHeadingS__Zxam2', (element) =>
     element.map((price) => price.innerHTML)
   );
@@ -27,7 +28,5 @@ async function webScrap(category, search = '') {
   await browser.close();
   return itens;
 }
-
+// webScrap('TV', 'led');
 module.exports = webScrap;
-
-webScrap('celular', '');
