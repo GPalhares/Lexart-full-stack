@@ -4,31 +4,25 @@ import CategorySelect from './Components/CategorySelect';
 import ProductList from './Components/ProductList';
 import SearchInput from './Components/SearchInput';
 import SiteSelect from './Components/SiteSelect';
-import searchByCategoryAndText from './utils/MercadoLivreApi/fetchProducts';
-import formatImages from './utils/functions/formatImages';
-import formatPrices from './utils/functions/formatPrices';
+import fetchMeliApi from './utils/MeliFetch/fetchProducts';
+import fetchBuscape from './utils/BuscapeFetch/fetchProducts';
 
 function ProductSearch() {
   const [category, setCategory] = useState('Celular');
-  const [site, setSite] = useState('Mercado Livre');
+  const [site, setSite] = useState('Meli');
   const [searchText, setSearchText] = useState('');
   const [products, setProducts] = useState([]);
 
   const handleSearch = async () => {
     let products = [];
-    if (site === 'Mercado Livre') {
-      const data = await searchByCategoryAndText(category, searchText);
-      products = formatPrices(data);
-      // products = data;
-    }
-    if (site === 'Buscape') {
-      console.log('1');
+    if (site === 'Meli') products = await fetchMeliApi(category, searchText);
 
-      const response = await fetch(
-        `http://localhost:3030/search/${category}/${searchText}`
-      );
-      const data = await response.json();
-      products = formatImages(category, data);
+    if (site === 'Buscape') products = await fetchBuscape(category, searchText);
+
+    if (site === 'Todos') {
+      const productsMeli = await fetchMeliApi(category, searchText);
+      const productsBuscape = await fetchBuscape(category, searchText);
+      products = [...productsMeli, ...productsBuscape];
     }
     setProducts(products);
   };

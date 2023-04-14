@@ -2,14 +2,16 @@ const puppeteer = require('puppeteer');
 
 async function webScrap(category, search = '') {
   const itens = {};
-  const data = [];
-  const browser = await puppeteer.launch({ headless: false });
+  const browser = await puppeteer.launch();
   const page = await browser.newPage();
+  //High height for scrap all images at the same time
   await page.setViewport({
     width: 1200,
     height: 5600,
   });
   await page.goto(`https://www.buscape.com.br/search?q=${category + search}`);
+  //Time optimization
+  await page.waitForSelector('.Text_MobileHeadingS__Zxam2');
 
   itens.price = await page.$$eval('.Text_MobileHeadingS__Zxam2', (element) =>
     element.map((price) => price.innerHTML)
@@ -27,16 +29,12 @@ async function webScrap(category, search = '') {
     '.SearchCard_ProductCard_Image__ffKkn span img',
     (element) => element.map((link) => link.src)
   );
-  itens.price.forEach((item, i) => {
-    data.push({
-      price: itens.price[i],
-      title: itens.title[i],
-      permalink: itens.permalink[i],
-      thumbnail: itens.thumbnail[i],
-    });
-  });
-
-  console.log(data);
+  const data = itens.price.map((price, i) => ({
+    price,
+    title: itens.title[i],
+    permalink: itens.permalink[i],
+    thumbnail: itens.thumbnail[i],
+  }));
 
   await browser.close();
   return data;
