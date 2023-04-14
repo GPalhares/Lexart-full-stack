@@ -3,8 +3,12 @@ const puppeteer = require('puppeteer');
 async function webScrap(category, search = '') {
   const itens = {};
   const data = [];
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
+  await page.setViewport({
+    width: 1200,
+    height: 5600,
+  });
   await page.goto(`https://www.buscape.com.br/search?q=${category + search}`);
 
   itens.price = await page.$$eval('.Text_MobileHeadingS__Zxam2', (element) =>
