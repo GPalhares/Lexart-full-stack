@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "root",
+    "password": "123456",
+    "database": "search_products",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "port": 3030
+  },
+  "test": {
+    "username": "root",
+    "password": "${TEST_DB_PASSWORD}",
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "port": 3030
+  },
+  "production": {
+    "username": "root",
+    "password": "${PROD_DB_PASSWORD}",
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "port": 3030
+  }
+}
