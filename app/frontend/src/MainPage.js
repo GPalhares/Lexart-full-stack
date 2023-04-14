@@ -5,41 +5,49 @@ import ProductList from './Components/ProductList';
 import SearchInput from './Components/SearchInput';
 import SiteSelect from './Components/SiteSelect';
 import searchByCategoryAndText from './utils/MercadoLivreApi/fetchProducts';
+import formatImages from './utils/functions/formatImages';
+import formatPrices from './utils/functions/formatPrices';
 
 function ProductSearch() {
-  const [category, setCategory] = useState('Mobile');
+  const [category, setCategory] = useState('Celular');
   const [site, setSite] = useState('Mercado Livre');
   const [searchText, setSearchText] = useState('');
   const [products, setProducts] = useState([]);
 
-  const handleCategoryChange = (event) => {
-    setCategory(event.target.value);
-  };
-
-  const handleSiteChange = (event) => {
-    setSite(event.target.value);
-  };
-
-  const handleSearchTextChange = (event) => {
-    setSearchText(event.target.value);
-  };
-
   const handleSearch = async () => {
-    const products = await searchByCategoryAndText('MLB1000', 'smartphone');
+    let products = [];
+    if (site === 'Mercado Livre') {
+      const data = await searchByCategoryAndText(category, searchText);
+      products = formatPrices(data);
+      // products = data;
+    }
+    if (site === 'Buscape') {
+      console.log('1');
+
+      const response = await fetch(
+        `http://localhost:3030/search/${category}/${searchText}`
+      );
+      const data = await response.json();
+      products = formatImages(category, data);
+    }
     setProducts(products);
-    console.error(products);
   };
 
   return (
     <div>
-      <CategorySelect value={category} onChange={handleCategoryChange} />
-      <br />
-      <SiteSelect value={site} onChange={handleSiteChange} />
-      <br />
-      <SearchInput value={searchText} onChange={handleSearchTextChange} />
-      <br />
+      <CategorySelect
+        value={category}
+        onChange={(event) => setCategory(event.target.value)}
+      />
+      <SiteSelect
+        value={site}
+        onChange={(event) => setSite(event.target.value)}
+      />
+      <SearchInput
+        value={searchText}
+        onChange={(event) => setSearchText(event.target.value)}
+      />
       <button onClick={handleSearch}>Search</button>
-      <br />
       <br />
       <ProductList products={products} />
     </div>

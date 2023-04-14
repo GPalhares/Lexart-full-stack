@@ -2,11 +2,15 @@ function ProductList({ products }) {
   return (
     <ul>
       {products.map((product) => (
-        <li key={product.id}>
+        <li key={product.title}>
           <p>{product.title}</p>
-          <img src={product.thumbnail} alt={product.description} />
-          <p>{product.description}</p>
-          <p>R${product.price}</p>
+          <img
+            src={product.thumbnail}
+            alt={product.title}
+            width="100"
+            height="100"
+          />
+          <p>{product.price}</p>
           <p>
             <a href={product.permalink}>Link</a>
           </p>
@@ -15,7 +19,5 @@ function ProductList({ products }) {
     </ul>
   );
 }
-
-// api descrição https://api.mercadolibre.com/items/$ITEM_ID/description
 
 export default ProductList;

@@ -3,9 +3,9 @@ function CategorySelect({ value, onChange }) {
     <label>
       Category:
       <select value={value} onChange={onChange}>
-        <option value="Mobile">Mobile</option>
-        <option value="Refrigerator">Refrigerator</option>
+        <option value="Geladeira">Geladeira</option>
         <option value="TV">TV</option>
+        <option value="Celular">Celular</option>
       </select>
     </label>
   );
