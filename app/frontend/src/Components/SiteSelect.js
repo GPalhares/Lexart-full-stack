@@ -3,7 +3,7 @@ function SiteSelect({ value, onChange }) {
     <label>
       Site:
       <select value={value} onChange={onChange}>
-        <option value="Todos">Todos</option>
+        <option value="All">Todos</option>
         <option value="Meli">Mercado Livre</option>
         <option value="Buscape">Buscapé</option>
       </select>

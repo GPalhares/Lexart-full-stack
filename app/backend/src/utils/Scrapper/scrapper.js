@@ -4,7 +4,7 @@ async function webScrap(category, search = '') {
   const itens = {};
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  //High height for scrap all images at the same time
+  //High height for scrap all info at the same time
   await page.setViewport({
     width: 1200,
     height: 5600,

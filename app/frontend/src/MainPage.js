@@ -4,8 +4,9 @@ import CategorySelect from './Components/CategorySelect';
 import ProductList from './Components/ProductList';
 import SearchInput from './Components/SearchInput';
 import SiteSelect from './Components/SiteSelect';
-import fetchMeliApi from './utils/MeliFetch/fetchProducts';
-import fetchBuscape from './utils/BuscapeFetch/fetchProducts';
+import fetchMeli from './utils/Fetchs/MeliFetch/fetchProducts';
+import fetchBuscape from './utils/Fetchs/BuscapeFetch/fetchProducts';
+import fetchAll from './utils/Fetchs/FetchAll/fetchProducts';
 
 function ProductSearch() {
   const [category, setCategory] = useState('Celular');
@@ -15,15 +16,13 @@ function ProductSearch() {
 
   const handleSearch = async () => {
     let products = [];
-    if (site === 'Meli') products = await fetchMeliApi(category, searchText);
+
+    if (site === 'Meli') products = await fetchMeli(category, searchText);
 
     if (site === 'Buscape') products = await fetchBuscape(category, searchText);
 
-    if (site === 'Todos') {
-      const productsMeli = await fetchMeliApi(category, searchText);
-      const productsBuscape = await fetchBuscape(category, searchText);
-      products = [...productsMeli, ...productsBuscape];
-    }
+    if (site === 'All') products = await fetchAll(category, searchText);
+
     setProducts(products);
   };
 
