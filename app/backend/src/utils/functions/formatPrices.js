@@ -7,4 +7,4 @@ function formatPrices(products) {
     };
   });
 }
-export default formatPrices;
+module.exports = formatPrices;

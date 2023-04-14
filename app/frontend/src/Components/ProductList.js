@@ -1,8 +1,8 @@
 function ProductList({ products }) {
   return (
     <ul>
-      {products.map((product) => (
-        <li key={product.title}>
+      {products.map((product, i) => (
+        <li key={i}>
           <p>{product.title}</p>
           <img
             src={product.thumbnail}
